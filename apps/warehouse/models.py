@@ -66,8 +66,8 @@ class OrderItem(BaseModel):
     product = models.ForeignKey(
         to=Product, verbose_name=_("Product"), related_name="order_items", on_delete=models.PROTECT
     )
-    needed_quantity = models.DecimalField(verbose_name=_("Needed quantity"), max_digits=10, decimal_places=2)
-    delivered_quantity = models.DecimalField(
+    needed_amount = models.DecimalField(verbose_name=_("Needed quantity"), max_digits=10, decimal_places=2)
+    delivered_amount = models.DecimalField(
         verbose_name=_("Delivered quantity"), max_digits=10, decimal_places=2, null=True, blank=True
     )
     price = models.DecimalField(verbose_name=_("Price"), max_digits=13, decimal_places=2, null=True, blank=True)
