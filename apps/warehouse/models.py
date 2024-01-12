@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from apps.common.models import BaseModel
-from apps.warehouse.choices import OrderStatus
+from apps.warehouse.choices import OrderStatus, ProductType
 
 
 class ProductUnit(BaseModel):
@@ -16,8 +16,9 @@ class ProductUnit(BaseModel):
 class Product(BaseModel):
     name = models.CharField(verbose_name=_("Name"), max_length=255)
     unit = models.ForeignKey(ProductUnit, verbose_name=_("Unit"), on_delete=models.SET_NULL, null=True, blank=True)
-    is_active = models.BooleanField(verbose_name=_("Is active"), default=True)
+    type = models.CharField(verbose_name=_("Type"), max_length=15, choices=ProductType.choices)
     in_stock = models.DecimalField(verbose_name=_("In stock"), max_digits=13, decimal_places=2, default=0)
+    is_active = models.BooleanField(verbose_name=_("Is active"), default=True)
 
     def __str__(self):
         return self.name

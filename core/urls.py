@@ -5,7 +5,11 @@ from django.urls import include, path
 
 from .schema import swagger_urlpatterns
 
-urlpatterns = [path("admin/", admin.site.urls), path("api/v1/common/", include("apps.common.urls", namespace="common"))]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("api/v1/common/", include("apps.common.urls")),
+    path("api/v1/warehouse/", include("apps.warehouse.urls")),
+]
 
 urlpatterns += swagger_urlpatterns
 
