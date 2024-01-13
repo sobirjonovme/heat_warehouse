@@ -19,7 +19,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ("unit", "is_active")
 
     def unit_short_name(self, obj):
-        return obj.unit.short_name
+        if obj.unit:
+            return obj.unit.short_name
 
     unit_short_name.short_description = _("Unit")
 

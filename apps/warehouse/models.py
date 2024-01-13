@@ -15,7 +15,7 @@ class ProductUnit(BaseModel):
 
 class Product(BaseModel):
     name = models.CharField(verbose_name=_("Name"), max_length=255)
-    unit = models.ForeignKey(ProductUnit, verbose_name=_("Unit"), on_delete=models.SET_NULL, null=True, blank=True)
+    unit = models.ForeignKey(ProductUnit, verbose_name=_("Unit"), on_delete=models.SET_NULL, null=True)
     type = models.CharField(verbose_name=_("Type"), max_length=15, choices=ProductType.choices)
     in_stock = models.DecimalField(verbose_name=_("In stock"), max_digits=13, decimal_places=2, default=0)
     is_active = models.BooleanField(verbose_name=_("Is active"), default=True)
@@ -66,9 +66,9 @@ class OrderItem(BaseModel):
     product = models.ForeignKey(
         to=Product, verbose_name=_("Product"), related_name="order_items", on_delete=models.PROTECT
     )
-    needed_amount = models.DecimalField(verbose_name=_("Needed quantity"), max_digits=10, decimal_places=2)
+    needed_amount = models.DecimalField(verbose_name=_("Needed Amount"), max_digits=10, decimal_places=2)
     delivered_amount = models.DecimalField(
-        verbose_name=_("Delivered quantity"), max_digits=10, decimal_places=2, null=True, blank=True
+        verbose_name=_("Delivered Amount"), max_digits=10, decimal_places=2, null=True, blank=True
     )
     price = models.DecimalField(verbose_name=_("Price"), max_digits=13, decimal_places=2, null=True, blank=True)
 
