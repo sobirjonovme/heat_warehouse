@@ -64,6 +64,8 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
+    "DEFAULT_THROTTLE_RATES": {"anon": "10/second", "user": "10/second"},
+    "EXCEPTION_HANDLER": "utils.exceptionhandler.custom_exception_handler",
 }
 
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
