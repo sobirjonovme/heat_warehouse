@@ -9,6 +9,7 @@ class UserRoles(models.TextChoices):
     # for warehouse
     MAIN_STOCKMAN = "main_stockman", _("Main Stockman")
     STOCKMAN = "stockman", _("Stockman")
+    SUPPLIER = "supplier", _("Supplier")
     WATCHMAN = "watchman", _("Watchman")
 
 

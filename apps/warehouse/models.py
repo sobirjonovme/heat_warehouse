@@ -44,7 +44,7 @@ class Order(BaseModel):
     )
     supplier = models.ForeignKey(
         to="users.User",
-        verbose_name=_("Delivered by"),
+        verbose_name=_("Supplier"),
         related_name="delivered_orders",
         on_delete=models.SET_NULL,
         null=True,

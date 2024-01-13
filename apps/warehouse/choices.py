@@ -24,3 +24,4 @@ class OrderStatus(models.TextChoices):
     CONFIRMED = "confirmed", _("Confirmed")
     DELIVERED = "delivered", _("Delivered")
     FINAL_CHECKED = "final_checked", _("Final checked")
+    CANCELED = "canceled", _("Canceled")
