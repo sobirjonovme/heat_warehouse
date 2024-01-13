@@ -10,6 +10,7 @@ urlpatterns = [
     path("products/create/", product.ProductCreateAPIView.as_view(), name="product-create"),
     # order
     path("orders/list/", order.OrderListAPIView.as_view(), name="orders-list"),
+    path("orders/<int:pk>/detail/", order.OrderDetailAPIView.as_view(), name="order-detail"),
     # order action
     path("orders/create/", order_action.OrderCreateAPIView.as_view(), name="order-create"),
     path(
