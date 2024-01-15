@@ -23,7 +23,7 @@ class OrderMainStockmanConfirmAPIView(APIView):
     @swagger_auto_schema(request_body=serializer_class)
     def post(self, request, pk):
         order = self.get_object(pk)
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_class(data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
 
         confirm = serializer.validated_data.get("confirm")

@@ -4,9 +4,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from unfold import admin as unfold_admin
-from unfold.contrib.filters.admin import (RangeDateFilter, RangeDateTimeFilter,
-                                          RangeNumericListFilter,
-                                          SliderNumericFilter)
+from unfold.contrib.filters.admin import RangeNumericListFilter, SliderNumericFilter
 from unfold.decorators import action, display
 
 from apps.warehouse.choices import OrderStatus, ProductType
@@ -79,6 +77,7 @@ class ProductAdmin(unfold_admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         qs = qs.select_related("unit")
+        qs = qs.order_by("-id")
         return qs
 
 
@@ -148,6 +147,7 @@ class OrderAdmin(unfold_admin.ModelAdmin):
             "supplier",
             "watchman",
         )
+        qs = qs.order_by("-id")
         return qs
 
 

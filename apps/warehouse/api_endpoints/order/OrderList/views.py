@@ -16,6 +16,10 @@ class OrderListAPIView(ListAPIView):
     filterset_fields = {
         "created_at": ["gte", "lte"],
         "status": ["exact"],
+        "ordered_by": ["exact"],
+        "main_stockman": ["exact"],
+        "supplier": ["exact"],
+        "watchman": ["exact"],
     }
 
     def get_queryset(self):
