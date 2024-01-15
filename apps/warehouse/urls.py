@@ -23,4 +23,9 @@ urlpatterns = [
         order_action.WatchmanCheckOrderAPIView.as_view(),
         name="order-watchman-check",
     ),
+    path(
+        "orders/<int:pk>/final-check/",
+        order_action.FinalCheckOrderAPIView.as_view(),
+        name="order-final-check",
+    ),
 ]

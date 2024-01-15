@@ -6,14 +6,14 @@ from apps.warehouse.models import Order, OrderItem
 
 class ItemUpdateSerializer(serializers.Serializer):
     order_item = serializers.PrimaryKeyRelatedField(queryset=OrderItem.objects.all(), required=True)
-    delivered_amount = serializers.DecimalField(max_digits=10, decimal_places=2, min_value=0, required=True)
+    price = serializers.DecimalField(max_digits=13, decimal_places=2, min_value=0, required=True)
 
     class Meta:
-        ref_name = "WatchmanCheckOrderItemUpdateSerializer"
+        ref_name = "FinalCheckOrderItemUpdateSerializer"
 
 
-class WatchmanCheckOrderSerializer(serializers.ModelSerializer):
-    items = ItemUpdateSerializer(many=True)
+class FinalCheckOrderSerializer(serializers.ModelSerializer):
+    items = ItemUpdateSerializer(many=True, required=True)
 
     class Meta:
         model = Order
