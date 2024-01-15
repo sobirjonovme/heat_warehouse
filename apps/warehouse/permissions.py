@@ -7,7 +7,9 @@ from apps.warehouse.choices import OrderStatus
 class IsStockman(BasePermission):
     def has_permission(self, request, view):
         user = request.user
-        return bool(user.is_authenticated and user.role in [UserRoles.STOCKMAN, UserRoles.MAIN_STOCKMAN])
+        return bool(
+            user.is_authenticated and user.role in [UserRoles.STOCKMAN, UserRoles.MAIN_STOCKMAN, UserRoles.ADMIN]
+        )
 
 
 class CanOrderBeConfirmed(BasePermission):
