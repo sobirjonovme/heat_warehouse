@@ -18,4 +18,9 @@ urlpatterns = [
         order_action.OrderMainStockmanConfirmAPIView.as_view(),
         name="order-main-stockman-confirm",
     ),
+    path(
+        "orders/<int:pk>/watchman-check/",
+        order_action.WatchmanCheckOrderAPIView.as_view(),
+        name="order-watchman-check",
+    ),
 ]
