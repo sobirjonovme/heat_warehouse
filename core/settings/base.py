@@ -59,6 +59,7 @@ CUSTOM_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "solo",
     "rest_framework",
     "drf_yasg",
     "corsheaders",
