@@ -21,6 +21,7 @@ class User(AbstractUser):
         choices=UserRoles.choices,
         default=UserRoles.ADMIN,
     )
+    telegram_id = models.CharField(max_length=255, verbose_name=_("Telegram ID"), blank=True, null=True)
 
     class Meta:
         verbose_name = _("User")
