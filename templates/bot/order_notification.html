@@ -1,0 +1,15 @@
+#yangi_buyurtma
+
+<b>📦 Buyurtma #{{ order.id }}</b>
+
+<b>🚚 Ta'minotchi:</b>  {{ supplier }}
+<b>👤 Omborchi:</b>  {{ stockman }}
+<b>🏢 Bo'lim:</b>  {{ department }}
+<b>🕔 Sana:</b>  {{ time }}
+
+======================
+
+<b>📜 Mahsulotlar:</b>
+{% for item in order_items %}
+    🏷 {{ item.product.name }} — {{ item.needed_amount }} {{ item.product.unit.short_name }}
+{% endfor %}

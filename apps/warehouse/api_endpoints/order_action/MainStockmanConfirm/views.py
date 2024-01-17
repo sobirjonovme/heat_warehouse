@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from apps.warehouse.choices import OrderStatus
 from apps.warehouse.models import Order
 from apps.warehouse.permissions import CanOrderBeConfirmed
+from apps.warehouse.services import send_order_notification
 
 from .serializers import OrderConfirmSerializer
 
@@ -36,6 +37,8 @@ class OrderMainStockmanConfirmAPIView(APIView):
             order.status = OrderStatus.CANCELED
         order.main_stockman = request.user
         order.save()
+
+        send_order_notification(order)
 
         return Response(status=status.HTTP_200_OK)
 
