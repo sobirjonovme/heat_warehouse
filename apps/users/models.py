@@ -21,6 +21,7 @@ class User(AbstractUser):
         choices=UserRoles.choices,
         default=UserRoles.ADMIN,
     )
+    telegram_id = models.CharField(max_length=255, verbose_name=_("Telegram ID"), blank=True, null=True)
 
     class Meta:
         verbose_name = _("User")
@@ -28,3 +29,6 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"

@@ -105,6 +105,11 @@ UNFOLD = {
                         "icon": "tune",
                         "link": reverse_lazy("admin:common_versionhistory_changelist"),
                     },
+                    {
+                        "title": _("Telegram Notification"),
+                        "icon": "mark_email_unread",
+                        "link": reverse_lazy("admin:common_telegramnotification_changelist"),
+                    },
                 ],
             },
         ],

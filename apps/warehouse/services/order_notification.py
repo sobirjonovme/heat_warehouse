@@ -1,0 +1,28 @@
+from django.template import loader
+from django.utils import timezone
+
+from apps.common.models import TelegramNotification
+from apps.common.services.telegram import send_telegram_message
+
+__all__ = ["send_order_notification"]
+
+
+def send_order_notification(order):
+    tg_notification = TelegramNotification.get_solo()
+
+    if tg_notification.is_enabled:
+        order_items = order.items.all().select_related("product", "product__unit")
+        supplier_tg_id = order.supplier.telegram_id
+
+        context = {
+            "order": order,
+            "supplier": order.supplier.get_full_name(),
+            "supplier_tg_id": supplier_tg_id,
+            "time": timezone.now().strftime("%Y-%m-%d %H:%M"),  # 2021-08-01 12:00
+            "stockman": order.main_stockman.get_full_name(),
+            "department": "Bo'lim nomi",
+            "order_items": order_items,
+        }
+
+        msg_text = loader.render_to_string("bot/order_notification.html", context)
+        send_telegram_message(tg_notification.bot_token, tg_notification.chat_id, msg_text)
