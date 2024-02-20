@@ -37,7 +37,7 @@ class WarehouseProduct(BaseModel):
         related_name="warehouses",
         on_delete=models.CASCADE,
     )
-    quantity = models.DecimalField(verbose_name=_("Quantity"), max_digits=15, decimal_places=2)
+    quantity = models.DecimalField(verbose_name=_("Quantity"), max_digits=15, decimal_places=2, default=0)
 
     class Meta:
         verbose_name = _("Warehouse Product")
