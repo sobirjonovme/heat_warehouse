@@ -32,7 +32,7 @@ class ProductUnitAdmin(unfold_admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(unfold_admin.ModelAdmin):
-    list_display = ("id", "name", "unit_short_name", "custom_type", "in_stock", "is_active")
+    list_display = ("id", "name", "unit_short_name", "custom_type", "is_active")
     list_display_links = ("id", "name")
     search_fields = ("id", "name")
     list_filter = ("is_active", "type")
@@ -154,7 +154,7 @@ class OrderAdmin(unfold_admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(unfold_admin.ModelAdmin):
-    list_display = ("id", "order", "product", "needed_amount", "delivered_amount", "price")
+    list_display = ("id", "order", "product", "needed_amount", "delivered_amount")
     list_display_links = ("id",)
     search_fields = ("id", "order__id", "product__name")
     autocomplete_fields = ("product", "order")

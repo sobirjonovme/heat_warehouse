@@ -5,7 +5,8 @@ from apps.orders.serializers import OrderUserSerializer
 
 
 class OrderListSerializer(serializers.ModelSerializer):
-    total_money = serializers.DecimalField(max_digits=13, decimal_places=2, read_only=True)
+    # total_money = serializers.DecimalField(max_digits=13, decimal_places=2, read_only=True)
+    total_money = serializers.SerializerMethodField()
     ordered_by = OrderUserSerializer(read_only=True)
     main_stockman = OrderUserSerializer(read_only=True)
     supplier = OrderUserSerializer(read_only=True)
@@ -23,3 +24,11 @@ class OrderListSerializer(serializers.ModelSerializer):
             "watchman",
             "created_at",
         )
+
+    def get_total_money(self, obj):
+        total_money = 0
+        if obj.status == "FINAL_CHECKED":
+            for item in obj.items.all():
+                total_money += item.cash_amount + item.card_amount + item.debt_amount
+
+        return total_money

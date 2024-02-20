@@ -28,7 +28,9 @@ class FinalCheckOrderAPIView(APIView):
 
         for item in serializer.validated_data.get("items"):
             order_item = item.get("order_item")
-            order_item.price = item.get("price")
+            order_item.cash_amount = item.get("cash_amount", 0)
+            order_item.card_amount = item.get("card_amount", 0)
+            order_item.debt_amount = item.get("debt_amount", 0)
             order_item.save()
 
         order.status = OrderStatus.FINAL_CHECKED

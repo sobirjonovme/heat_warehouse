@@ -17,7 +17,6 @@ class Product(BaseModel):
     name = models.CharField(verbose_name=_("Name"), max_length=255)
     unit = models.ForeignKey(ProductUnit, verbose_name=_("Unit"), on_delete=models.SET_NULL, null=True)
     type = models.CharField(verbose_name=_("Type"), max_length=15, choices=ProductType.choices)
-    in_stock = models.DecimalField(verbose_name=_("In stock"), max_digits=13, decimal_places=2, default=0)
     is_active = models.BooleanField(verbose_name=_("Is active"), default=True)
 
     def __str__(self):
@@ -70,7 +69,9 @@ class OrderItem(BaseModel):
     delivered_amount = models.DecimalField(
         verbose_name=_("Delivered Amount"), max_digits=10, decimal_places=2, null=True, blank=True
     )
-    price = models.DecimalField(verbose_name=_("Price"), max_digits=13, decimal_places=2, null=True, blank=True)
+    cash_amount = models.DecimalField(verbose_name=_("Cash Amount"), max_digits=13, decimal_places=2, default=0)
+    card_amount = models.DecimalField(verbose_name=_("Card Amount"), max_digits=13, decimal_places=2, default=0)
+    debt_amount = models.DecimalField(verbose_name=_("Debt Amount"), max_digits=13, decimal_places=2, default=0)
 
     def __str__(self):
         return f"Order #{self.order.id} - {self.product.name}"

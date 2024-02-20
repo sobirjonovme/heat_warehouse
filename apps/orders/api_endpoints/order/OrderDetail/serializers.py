@@ -9,7 +9,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ("id", "name", "unit", "type", "in_stock", "is_active")
+        fields = ("id", "name", "unit", "type", "is_active")
         ref_name = "OrderDetailProductSerializer"
 
 
@@ -24,7 +24,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "product",
             "needed_amount",
             "delivered_amount",
-            "price",
+            "cash_amount",
+            "card_amount",
+            "debt_amount",
         )
         ref_name = "OrderDetailOrderItemSerializer"
 

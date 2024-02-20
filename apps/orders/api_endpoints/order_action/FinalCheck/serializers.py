@@ -6,7 +6,9 @@ from apps.orders.models import Order, OrderItem
 
 class ItemUpdateSerializer(serializers.Serializer):
     order_item = serializers.PrimaryKeyRelatedField(queryset=OrderItem.objects.all(), required=True)
-    price = serializers.DecimalField(max_digits=13, decimal_places=2, min_value=0, required=True)
+    cash_amount = serializers.DecimalField(max_digits=13, decimal_places=2, min_value=0, required=False)
+    card_amount = serializers.DecimalField(max_digits=13, decimal_places=2, min_value=0, required=False)
+    debt_amount = serializers.DecimalField(max_digits=13, decimal_places=2, min_value=0, required=False)
 
     class Meta:
         ref_name = "FinalCheckOrderItemUpdateSerializer"
