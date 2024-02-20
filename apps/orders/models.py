@@ -27,6 +27,13 @@ class Order(BaseModel):
     status = models.CharField(
         verbose_name=_("Status"), max_length=31, choices=OrderStatus.choices, default=OrderStatus.CREATED
     )
+    warehouse = models.ForeignKey(
+        to="stores.Warehouse",
+        verbose_name=_("Warehouse"),
+        related_name="orders",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
     ordered_by = models.ForeignKey(
         to="users.User",
         verbose_name=_("Ordered by"),
@@ -65,10 +72,14 @@ class OrderItem(BaseModel):
     product = models.ForeignKey(
         to=Product, verbose_name=_("Product"), related_name="order_items", on_delete=models.PROTECT
     )
-    needed_amount = models.DecimalField(verbose_name=_("Needed Amount"), max_digits=10, decimal_places=2)
+    needed_amount = models.DecimalField(verbose_name=_("Needed Amount"), max_digits=15, decimal_places=2)
     delivered_amount = models.DecimalField(
-        verbose_name=_("Delivered Amount"), max_digits=10, decimal_places=2, null=True, blank=True
+        verbose_name=_("Delivered Amount"), max_digits=15, decimal_places=2, null=True, blank=True
     )
+
+    image = models.ImageField(verbose_name=_("Image"), upload_to="order_items/", null=True, blank=True)
+    comment = models.TextField(verbose_name=_("Comment"), null=True, blank=True)
+
     cash_amount = models.DecimalField(verbose_name=_("Cash Amount"), max_digits=13, decimal_places=2, default=0)
     card_amount = models.DecimalField(verbose_name=_("Card Amount"), max_digits=13, decimal_places=2, default=0)
     debt_amount = models.DecimalField(verbose_name=_("Debt Amount"), max_digits=13, decimal_places=2, default=0)

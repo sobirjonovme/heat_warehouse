@@ -56,6 +56,7 @@ CUSTOM_APPS = [
     "apps.common",
     "apps.users",
     "apps.orders",
+    "apps.stores",
 ]
 
 THIRD_PARTY_APPS = [

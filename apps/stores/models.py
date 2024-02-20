@@ -22,3 +22,52 @@ class Warehouse(BaseModel):
 
     def __str__(self):
         return self.name
+
+
+class WarehouseProduct(BaseModel):
+    warehouse = models.ForeignKey(
+        to=Warehouse,
+        verbose_name=_("Warehouse"),
+        related_name="products",
+        on_delete=models.CASCADE,
+    )
+    product = models.ForeignKey(
+        to="orders.Product",
+        verbose_name=_("Product"),
+        related_name="warehouses",
+        on_delete=models.CASCADE,
+    )
+    quantity = models.DecimalField(verbose_name=_("Quantity"), max_digits=15, decimal_places=2)
+
+    class Meta:
+        verbose_name = _("Warehouse Product")
+        verbose_name_plural = _("Warehouse Products")
+
+    def __str__(self):
+        return f"{self.warehouse} - {self.product}"
+
+
+class WarehouseProductUsage(BaseModel):
+    warehouse_product = models.ForeignKey(
+        to=WarehouseProduct,
+        verbose_name=_("Warehouse product"),
+        related_name="usages",
+        on_delete=models.CASCADE,
+    )
+    quantity = models.DecimalField(verbose_name=_("Quantity"), max_digits=15, decimal_places=2)
+    to_warehouse = models.ForeignKey(
+        to=Warehouse,
+        verbose_name=_("To warehouse"),
+        related_name="+",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+    comment = models.TextField(verbose_name=_("Comment"), blank=True, null=True)
+
+    class Meta:
+        verbose_name = _("Product Usage")
+        verbose_name_plural = _("Product Usages")
+
+    def __str__(self):
+        return f"{self.warehouse_product} - {self.quantity}"

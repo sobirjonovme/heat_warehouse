@@ -10,6 +10,8 @@ class ItemCreateSerializer(serializers.ModelSerializer):
             "id",
             "product",
             "needed_amount",
+            "image",
+            "comment",
         )
         ref_name = "OrderItemCreateSerializer"
 
