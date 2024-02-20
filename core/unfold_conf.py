@@ -57,113 +57,113 @@ UNFOLD = {
             },
         },
     },
-    "SIDEBAR": {
-        "show_search": True,  # Search in applications and models names
-        "show_all_applications": True,  # Dropdown with all applications and models
-        "navigation": [
-            {
-                "title": _("Navigation"),
-                "separator": True,  # Top border
-                "items": [
-                    {
-                        "title": _("Dashboard"),
-                        "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
-                        "link": reverse_lazy("admin:index"),
-                        "badge": "core.unfold_conf.badge_callback",
-                        "permission": lambda request: request.user.is_superuser,
-                    },
-                ],
-            },
-            {
-                "title": _("Warehouse"),
-                "separator": True,
-                "items": [
-                    {
-                        "title": _("Orders"),
-                        "icon": "shopping_cart",  # Supported icon set: https://fonts.google.com/icons
-                        "link": reverse_lazy("admin:warehouse_order_changelist"),
-                    },
-                    {
-                        "title": _("Products"),
-                        "icon": "receipt",  # Supported icon set: https://fonts.google.com/icons
-                        "link": reverse_lazy("admin:warehouse_product_changelist"),
-                    },
-                ],
-            },
-            # Common
-            {
-                # "title": _("Common"),
-                "separator": True,
-                "items": [
-                    {
-                        "title": _("Users"),
-                        "icon": "people",
-                        "link": reverse_lazy("admin:users_user_changelist"),
-                    },
-                    {
-                        "title": _("Common"),
-                        "icon": "tune",
-                        "link": reverse_lazy("admin:common_versionhistory_changelist"),
-                    },
-                    {
-                        "title": _("Telegram Notification"),
-                        "icon": "mark_email_unread",
-                        "link": reverse_lazy("admin:common_telegramnotification_changelist"),
-                    },
-                ],
-            },
-        ],
-    },
-    "TABS": [
-        {
-            "models": [
-                "common.versionhistory",
-                "common.frontendtranslation",
-            ],
-            "items": [
-                {
-                    "title": _("Version History"),
-                    "link": reverse_lazy("admin:common_versionhistory_changelist"),
-                },
-                {
-                    "title": _("Frontend Translation"),
-                    "link": reverse_lazy("admin:common_frontendtranslation_changelist"),
-                },
-            ],
-        },
-        {
-            "models": [
-                "warehouse.order",
-                "warehouse.orderitem",
-            ],
-            "items": [
-                {
-                    "title": _("Orders"),
-                    "link": reverse_lazy("admin:warehouse_order_changelist"),
-                },
-                {
-                    "title": _("Order Items"),
-                    "link": reverse_lazy("admin:warehouse_orderitem_changelist"),
-                },
-            ],
-        },
-        {
-            "models": [
-                "warehouse.product",
-                "warehouse.productunit",
-            ],
-            "items": [
-                {
-                    "title": _("Products"),
-                    "link": reverse_lazy("admin:warehouse_product_changelist"),
-                },
-                {
-                    "title": _("Product Units"),
-                    "link": reverse_lazy("admin:warehouse_productunit_changelist"),
-                },
-            ],
-        },
-    ],
+    # "SIDEBAR": {
+    #     "show_search": True,  # Search in applications and models names
+    #     "show_all_applications": True,  # Dropdown with all applications and models
+    #     "navigation": [
+    #         {
+    #             "title": _("Navigation"),
+    #             "separator": True,  # Top border
+    #             "items": [
+    #                 {
+    #                     "title": _("Dashboard"),
+    #                     "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
+    #                     "link": reverse_lazy("admin:index"),
+    #                     "badge": "core.unfold_conf.badge_callback",
+    #                     "permission": lambda request: request.user.is_superuser,
+    #                 },
+    #             ],
+    #         },
+    #         {
+    #             "title": _("Warehouse"),
+    #             "separator": True,
+    #             "items": [
+    #                 {
+    #                     "title": _("Orders"),
+    #                     "icon": "shopping_cart",  # Supported icon set: https://fonts.google.com/icons
+    #                     "link": reverse_lazy("admin:orders_order_changelist"),
+    #                 },
+    #                 {
+    #                     "title": _("Products"),
+    #                     "icon": "receipt",  # Supported icon set: https://fonts.google.com/icons
+    #                     "link": reverse_lazy("admin:orders_product_changelist"),
+    #                 },
+    #             ],
+    #         },
+    #         # Common
+    #         {
+    #             # "title": _("Common"),
+    #             "separator": True,
+    #             "items": [
+    #                 {
+    #                     "title": _("Users"),
+    #                     "icon": "people",
+    #                     "link": reverse_lazy("admin:users_user_changelist"),
+    #                 },
+    #                 {
+    #                     "title": _("Common"),
+    #                     "icon": "tune",
+    #                     "link": reverse_lazy("admin:common_versionhistory_changelist"),
+    #                 },
+    #                 {
+    #                     "title": _("Telegram Notification"),
+    #                     "icon": "mark_email_unread",
+    #                     "link": reverse_lazy("admin:common_telegramnotification_changelist"),
+    #                 },
+    #             ],
+    #         },
+    #     ],
+    # },
+    # "TABS": [
+    #     {
+    #         "models": [
+    #             "common.versionhistory",
+    #             "common.frontendtranslation",
+    #         ],
+    #         "items": [
+    #             {
+    #                 "title": _("Version History"),
+    #                 "link": reverse_lazy("admin:common_versionhistory_changelist"),
+    #             },
+    #             {
+    #                 "title": _("Frontend Translation"),
+    #                 "link": reverse_lazy("admin:common_frontendtranslation_changelist"),
+    #             },
+    #         ],
+    #     },
+    #     {
+    #         "models": [
+    #             "orders.order",
+    #             "orders.orderitem",
+    #         ],
+    #         "items": [
+    #             {
+    #                 "title": _("Orders"),
+    #                 "link": reverse_lazy("admin:orders_order_changelist"),
+    #             },
+    #             {
+    #                 "title": _("Order Items"),
+    #                 "link": reverse_lazy("admin:orders_orderitem_changelist"),
+    #             },
+    #         ],
+    #     },
+    #     {
+    #         "models": [
+    #             "orders.product",
+    #             "orders.productunit",
+    #         ],
+    #         "items": [
+    #             {
+    #                 "title": _("Products"),
+    #                 "link": reverse_lazy("admin:orders_product_changelist"),
+    #             },
+    #             {
+    #                 "title": _("Product Units"),
+    #                 "link": reverse_lazy("admin:orders_productunit_changelist"),
+    #             },
+    #         ],
+    #     },
+    # ],
 }
 
 
