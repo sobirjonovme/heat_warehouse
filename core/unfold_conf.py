@@ -133,8 +133,8 @@ UNFOLD = {
         },
         {
             "models": [
-                "warehouse.order",
-                "warehouse.orderitem",
+                "orders.order",
+                "orders.orderitem",
             ],
             "items": [
                 {
@@ -149,8 +149,8 @@ UNFOLD = {
         },
         {
             "models": [
-                "warehouse.product",
-                "warehouse.productunit",
+                "orders.product",
+                "orders.productunit",
             ],
             "items": [
                 {

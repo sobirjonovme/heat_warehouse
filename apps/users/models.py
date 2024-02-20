@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class UserRoles(models.TextChoices):
     ADMIN = "admin", _("Admin")
-    # for warehouse
+    # for orders
     MAIN_STOCKMAN = "main_stockman", _("Main Stockman")
     STOCKMAN = "stockman", _("Stockman")
     SUPPLIER = "supplier", _("Supplier")
