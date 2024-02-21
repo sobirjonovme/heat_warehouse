@@ -82,7 +82,7 @@ class ProductAdmin(unfold_admin.ModelAdmin):
         return qs
 
 
-class OrderItemInline(unfold_admin.TabularInline):
+class OrderItemInline(unfold_admin.StackedInline):
     model = OrderItem
     extra = 0
     autocomplete_fields = ("product",)

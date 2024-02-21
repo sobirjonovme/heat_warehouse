@@ -83,6 +83,7 @@ class OrderItem(BaseModel):
     cash_amount = models.DecimalField(verbose_name=_("Cash Amount"), max_digits=13, decimal_places=2, default=0)
     card_amount = models.DecimalField(verbose_name=_("Card Amount"), max_digits=13, decimal_places=2, default=0)
     debt_amount = models.DecimalField(verbose_name=_("Debt Amount"), max_digits=13, decimal_places=2, default=0)
+    payment_comment = models.TextField(verbose_name=_("Payment Comment"), null=True, blank=True)
 
     def __str__(self):
         return f"Order #{self.order.id} - {self.product.name}"
