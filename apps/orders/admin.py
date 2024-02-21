@@ -6,7 +6,7 @@ from unfold.contrib.filters.admin import (RangeNumericListFilter,
 from unfold.decorators import display
 
 from apps.orders.choices import OrderStatus
-from apps.orders.models import Order, OrderItem
+from apps.orders.models import DebtPayback, Order, OrderItem
 
 
 class CustomSliderNumericFilter(SliderNumericFilter):
@@ -100,4 +100,16 @@ class OrderItemAdmin(unfold_admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         qs = qs.select_related("product", "order")
+        return qs
+
+
+@admin.register(DebtPayback)
+class DebtPaybackAdmin(unfold_admin.ModelAdmin):
+    list_display = ("id", "order_item", "cash_amount", "card_amount", "date")
+    list_display_links = ("id", "order_item")
+    readonly_fields = ("created_at", "updated_at")
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        qs = qs.select_related("order_item")
         return qs

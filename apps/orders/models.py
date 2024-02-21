@@ -45,6 +45,10 @@ class Order(BaseModel):
         null=True,
     )
 
+    class Meta:
+        verbose_name = _("Order")
+        verbose_name_plural = _("Orders")
+
     def __str__(self):
         return f"Order #{self.id} - {self.status}"
 
@@ -68,5 +72,28 @@ class OrderItem(BaseModel):
     remain_debt = models.DecimalField(verbose_name=_("Remain Debt"), max_digits=13, decimal_places=2, default=0)
     payment_comment = models.TextField(verbose_name=_("Payment Comment"), null=True, blank=True)
 
+    class Meta:
+        verbose_name = _("Order Item")
+        verbose_name_plural = _("Order Items")
+
     def __str__(self):
         return f"Order #{self.order.id} - {self.product.name}"
+
+
+class DebtPayback(BaseModel):
+    order_item = models.ForeignKey(
+        to=OrderItem, verbose_name=_("Order Item"), related_name="debt_paybacks", on_delete=models.CASCADE
+    )
+    cash_amount = models.DecimalField(verbose_name=_("Amount"), max_digits=13, decimal_places=2, default=0)
+    card_amount = models.DecimalField(verbose_name=_("Amount"), max_digits=13, decimal_places=2, default=0)
+    date = models.DateField(verbose_name=_("Date"))
+    user = models.ForeignKey(
+        to="users.User", verbose_name=_("User"), related_name="debt_paybacks", on_delete=models.SET_NULL, null=True
+    )
+
+    class Meta:
+        verbose_name = _("Debt Payback")
+        verbose_name_plural = _("Debt Paybacks")
+
+    def __str__(self):
+        return f"Debt Payback #{self.id} - {self.order_item}"
