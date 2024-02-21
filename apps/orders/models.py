@@ -2,25 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from apps.common.models import BaseModel
-from apps.orders.choices import OrderStatus, ProductType
-
-
-class ProductUnit(BaseModel):
-    name = models.CharField(verbose_name=_("Name"), max_length=127)
-    short_name = models.CharField(verbose_name=_("Short name"), max_length=15)
-
-    def __str__(self):
-        return self.short_name
-
-
-class Product(BaseModel):
-    name = models.CharField(verbose_name=_("Name"), max_length=255)
-    unit = models.ForeignKey(ProductUnit, verbose_name=_("Unit"), on_delete=models.SET_NULL, null=True)
-    type = models.CharField(verbose_name=_("Type"), max_length=15, choices=ProductType.choices)
-    is_active = models.BooleanField(verbose_name=_("Is active"), default=True)
-
-    def __str__(self):
-        return self.name
+from apps.orders.choices import OrderStatus
 
 
 class Order(BaseModel):
@@ -70,7 +52,7 @@ class Order(BaseModel):
 class OrderItem(BaseModel):
     order = models.ForeignKey(to=Order, verbose_name=_("Order"), related_name="items", on_delete=models.CASCADE)
     product = models.ForeignKey(
-        to=Product, verbose_name=_("Product"), related_name="order_items", on_delete=models.PROTECT
+        to="stores.Product", verbose_name=_("Product"), related_name="order_items", on_delete=models.PROTECT
     )
     needed_amount = models.DecimalField(verbose_name=_("Needed Amount"), max_digits=15, decimal_places=2)
     delivered_amount = models.DecimalField(

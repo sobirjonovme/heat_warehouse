@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .api_endpoints import order, order_action, product
+from ..stores.api_endpoints import product
+from .api_endpoints import order, order_action
 
 app_name = "orders"
 

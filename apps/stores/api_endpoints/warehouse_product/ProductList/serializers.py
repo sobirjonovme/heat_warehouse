@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from apps.orders.serializers import OrderDetailProductSerializer
 from apps.stores.models import WarehouseProduct
+from apps.stores.serializers import ProductShortSerializer
 
 
 class WarehouseProductSerializer(serializers.ModelSerializer):
-    product = OrderDetailProductSerializer()
+    product = ProductShortSerializer()
     warehouse = serializers.SerializerMethodField()
 
     class Meta:
