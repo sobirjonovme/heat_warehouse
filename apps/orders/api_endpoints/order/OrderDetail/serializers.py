@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
-from apps.orders.models import Order, OrderItem, Product
-from apps.orders.serializers import OrderUserSerializer
+from apps.orders.models import Order, OrderItem
+from apps.orders.serializers import UserShortSerializer
+from apps.stores.models import Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -32,10 +33,10 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
-    ordered_by = OrderUserSerializer(read_only=True)
-    main_stockman = OrderUserSerializer(read_only=True)
-    supplier = OrderUserSerializer(read_only=True)
-    watchman = OrderUserSerializer(read_only=True)
+    ordered_by = UserShortSerializer(read_only=True)
+    main_stockman = UserShortSerializer(read_only=True)
+    supplier = UserShortSerializer(read_only=True)
+    watchman = UserShortSerializer(read_only=True)
     items = serializers.SerializerMethodField()
 
     class Meta:

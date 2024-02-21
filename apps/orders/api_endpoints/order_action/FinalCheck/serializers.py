@@ -9,6 +9,7 @@ class ItemUpdateSerializer(serializers.Serializer):
     cash_amount = serializers.DecimalField(max_digits=13, decimal_places=2, min_value=0, required=False)
     card_amount = serializers.DecimalField(max_digits=13, decimal_places=2, min_value=0, required=False)
     debt_amount = serializers.DecimalField(max_digits=13, decimal_places=2, min_value=0, required=False)
+    payment_comment = serializers.CharField(required=False)
 
     class Meta:
         ref_name = "FinalCheckOrderItemUpdateSerializer"

@@ -2,7 +2,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from apps.orders.models import Product
+from apps.stores.models import Product
 
 from .serializers import ProductListSerializer
 
