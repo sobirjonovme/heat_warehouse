@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .api_endpoints import order, order_action
+from .api_endpoints import debt, order, order_action
 
 app_name = "orders"
 
@@ -25,4 +25,6 @@ urlpatterns = [
         order_action.FinalCheckOrderAPIView.as_view(),
         name="order-final-check",
     ),
+    # debt
+    path("debts/list/", debt.DebtListAPIView.as_view(), name="debts-list"),
 ]
