@@ -28,4 +28,5 @@ urlpatterns = [
     # debt
     path("debts/list/", debt.DebtListAPIView.as_view(), name="debts-list"),
     path("debt-payback/<int:order_item_id>/", debt.PaybackDebtAPIView.as_view(), name="debt-payback"),
+    path("debt-payback/list/", debt.DebtPaybackListAPIView.as_view(), name="debt-payback-list"),
 ]
