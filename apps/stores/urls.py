@@ -1,10 +1,12 @@
 from django.urls import path
 
-from .api_endpoints import product, warehouse_product
+from .api_endpoints import product, warehouse, warehouse_product
 
 app_name = "stores"
 
 urlpatterns = [
+    # warehouse
+    path("list/", warehouse.WarehouseListAPIView.as_view(), name="warehouses-list"),
     # product
     path("products/list/", product.ProductListAPIView.as_view(), name="products-list"),
     path("products/create/", product.ProductCreateAPIView.as_view(), name="product-create"),
