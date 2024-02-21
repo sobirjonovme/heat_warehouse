@@ -24,6 +24,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "status",
+            "warehouse",
             "items",
         )
         extra_kwargs = {
