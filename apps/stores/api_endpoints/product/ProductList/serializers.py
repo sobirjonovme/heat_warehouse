@@ -6,7 +6,8 @@ from apps.stores.serializers import ProductUnitSerializer
 
 class ProductListSerializer(serializers.ModelSerializer):
     unit = ProductUnitSerializer()
+    label = serializers.CharField(source="name", read_only=True)
 
     class Meta:
         model = Product
-        fields = ("id", "name", "unit", "type", "is_active")
+        fields = ("id", "name", "label", "unit", "type", "is_active")

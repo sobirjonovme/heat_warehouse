@@ -1,4 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 
@@ -11,8 +12,9 @@ class ProductListAPIView(ListAPIView):
     serializer_class = ProductListSerializer
     permission_classes = (IsAuthenticated,)
 
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, SearchFilter)
     filterset_fields = ("type",)
+    search_fields = ("name",)
 
     def get_queryset(self):
         queryset = Product.objects.filter(is_active=True)
