@@ -3,6 +3,7 @@ from rest_framework import serializers
 from apps.orders.models import Order, OrderItem
 from apps.orders.serializers import UserShortSerializer
 from apps.stores.models import Product
+from apps.stores.serializers import WarehouseShortSerializer
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -33,6 +34,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
+    warehouse = WarehouseShortSerializer(read_only=True)
     ordered_by = UserShortSerializer(read_only=True)
     main_stockman = UserShortSerializer(read_only=True)
     supplier = UserShortSerializer(read_only=True)
@@ -44,6 +46,7 @@ class OrderDetailSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "status",
+            "warehouse",
             "ordered_by",
             "main_stockman",
             "supplier",

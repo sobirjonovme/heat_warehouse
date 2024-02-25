@@ -2,10 +2,12 @@ from rest_framework import serializers
 
 from apps.orders.models import Order
 from apps.orders.serializers import UserShortSerializer
+from apps.stores.serializers import WarehouseShortSerializer
 
 
 class OrderListSerializer(serializers.ModelSerializer):
     # total_money = serializers.DecimalField(max_digits=13, decimal_places=2, read_only=True)
+    warehouse = WarehouseShortSerializer(read_only=True)
     total_money = serializers.SerializerMethodField()
     ordered_by = UserShortSerializer(read_only=True)
     main_stockman = UserShortSerializer(read_only=True)
@@ -18,6 +20,7 @@ class OrderListSerializer(serializers.ModelSerializer):
             "id",
             "status",
             "total_money",
+            "warehouse",
             "ordered_by",
             "main_stockman",
             "supplier",

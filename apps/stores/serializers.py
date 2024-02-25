@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.stores.models import Product, ProductUnit
+from apps.stores.models import Product, ProductUnit, Warehouse
 
 
 class ProductUnitSerializer(serializers.ModelSerializer):
@@ -19,3 +19,9 @@ class ProductShortSerializer(serializers.ModelSerializer):
             "name",
             "unit",
         )
+
+
+class WarehouseShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Warehouse
+        fields = ("id", "name")
