@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from apps.orders.models import DebtPayback, OrderItem
+from apps.orders.serializers import UserShortSerializer
 from apps.stores.serializers import ProductShortSerializer
 
 
@@ -21,6 +22,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class DebtPaybackListSerializer(serializers.ModelSerializer):
     order_item = OrderItemSerializer(read_only=True)
+    user = UserShortSerializer(read_only=True)
 
     class Meta:
         model = DebtPayback
