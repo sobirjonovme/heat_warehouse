@@ -19,10 +19,11 @@ class UserAdmin(BaseUserAdmin, unfold_admin.ModelAdmin):
     list_display_links = ("id", "username", "first_name", "last_name")
     search_fields = ("id", "username", "first_name", "last_name")
     list_filter = ("role", "is_active")
+    ordering = ("-id",)
 
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "role")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "telegram_id", "role")}),
         (
             _("Permissions"),
             {
