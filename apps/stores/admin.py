@@ -37,6 +37,7 @@ class ProductAdmin(unfold_admin.ModelAdmin):
     list_display_links = ("id", "name")
     search_fields = ("id", "name")
     list_filter = ("is_active", "type")
+    autocomplete_fields = ("created_by",)
 
     # actions_list = []  # Displayed above the results list
     # actions_row = []  # Displayed in a table row in results list
