@@ -10,3 +10,8 @@ class ProductCreateSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "unit": {"required": True},
         }
+
+    def create(self, validated_data):
+        product_name = validated_data.pop("name").lower().capitalize()
+        product, _ = Product.objects.get_or_create(name=product_name, defaults=validated_data)
+        return product

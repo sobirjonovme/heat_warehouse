@@ -39,6 +39,14 @@ class Product(BaseModel):
     unit = models.ForeignKey(ProductUnit, verbose_name=_("Unit"), on_delete=models.SET_NULL, null=True)
     type = models.CharField(verbose_name=_("Type"), max_length=15, choices=ProductType.choices)
     is_active = models.BooleanField(verbose_name=_("Is active"), default=True)
+    created_by = models.ForeignKey(
+        to="users.User",
+        verbose_name=_("Created by"),
+        related_name="+",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.name
