@@ -12,6 +12,8 @@ class ProductCreateSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        product_name = validated_data.pop("name").lower().capitalize()
-        product, _ = Product.objects.get_or_create(name=product_name, defaults=validated_data)
+        product_name = validated_data.get("name").lower().capitalize()
+        unit = validated_data.get("unit")
+        product_type = validated_data.get("type")
+        product, _ = Product.objects.get_or_create(name=product_name, unit=unit, defaults={"type": product_type})
         return product
