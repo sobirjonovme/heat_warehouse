@@ -24,11 +24,14 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "id",
             "order",
             "product",
+            "comment",
             "needed_amount",
             "delivered_amount",
             "cash_amount",
             "card_amount",
             "debt_amount",
+            "remain_debt",
+            "payment_comment",
         )
         ref_name = "OrderDetailOrderItemSerializer"
 
