@@ -19,7 +19,7 @@ def send_order_notification(order):
             "supplier": order.supplier.get_full_name(),
             "supplier_tg_id": supplier_tg_id,
             "time": timezone.localtime().strftime("%Y-%m-%d %H:%M"),  # 2021-08-01 12:00
-            "stockman": order.main_stockman.get_full_name(),
+            "stockman": order.ordered_by.get_full_name(),
             "warehouse": order.warehouse.name,
             "order_items": order_items,
         }
