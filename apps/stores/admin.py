@@ -1,4 +1,8 @@
+from typing import Any
+
 from django.contrib import admin, messages
+from django.db.models import Model
+from django.forms import Form
 from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -33,6 +37,7 @@ class ProductAdmin(unfold_admin.ModelAdmin):
     list_display_links = ("id", "name")
     search_fields = ("id", "name")
     list_filter = ("is_active", "type")
+    autocomplete_fields = ("created_by",)
 
     # actions_list = []  # Displayed above the results list
     # actions_row = []  # Displayed in a table row in results list
@@ -77,6 +82,13 @@ class ProductAdmin(unfold_admin.ModelAdmin):
         qs = qs.select_related("unit")
         qs = qs.order_by("-id")
         return qs
+
+    def save_model(self, request: HttpRequest, obj: Model, form: Form, change: Any) -> None:
+        obj.name = obj.name.lower().capitalize()
+        if not obj.created_by:
+            obj.created_by = request.user
+
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(Warehouse)

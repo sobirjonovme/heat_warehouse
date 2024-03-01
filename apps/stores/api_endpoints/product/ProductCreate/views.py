@@ -11,5 +11,8 @@ class ProductCreateAPIView(CreateAPIView):
     serializer_class = ProductCreateSerializer
     permission_classes = (IsStockman,)
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
 
 __all__ = ["ProductCreateAPIView"]
