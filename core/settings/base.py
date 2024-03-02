@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
-import environ
-
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
+
+import environ
 
 from core.jazzmin_conf import *  # noqa
 from core.unfold_conf import *  # noqa
@@ -202,7 +202,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 
 # SIMPLE_JWT
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
