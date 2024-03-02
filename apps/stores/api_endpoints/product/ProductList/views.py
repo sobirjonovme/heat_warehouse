@@ -12,6 +12,7 @@ class ProductListAPIView(ListAPIView):
     serializer_class = ProductListSerializer
     permission_classes = (IsAuthenticated,)
 
+    pagination_class = None
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filterset_fields = ("type",)
     search_fields = ("name",)
