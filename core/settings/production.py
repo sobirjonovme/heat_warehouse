@@ -19,8 +19,10 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost",
     "http://127.0.0.1",
     "http://127.0.0.1:8000",
-    "http://heatwarehouse.pythonanywhere.com/",
-    "https://heatwarehouse.pythonanywhere.com/",
+    "http://heatwarehouse.pythonanywhere.com",
+    "https://heatwarehouse.pythonanywhere.com",
+    "http://heat-wearhouse.xn--0h8h.uz",
+    "https://heat-wearhouse.xn--0h8h.uz",
 ]
 
 ###################################################################
