@@ -4,22 +4,21 @@ from .base import *  # noqa
 # General
 ###################################################################
 
-DEBUG = False
+DEBUG = True
 STAGE = "production"
 
 ###################################################################
 # Django security
 ###################################################################
 
-USE_X_FORWARDED_HOST = True
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+# USE_X_FORWARDED_HOST = True
+# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost",
-    "https://localhost",
     "http://127.0.0.1",
-    "https://127.0.0.1",
+    "http://127.0.0.1:8000",
     "http://heatwarehouse.pythonanywhere.com/",
     "https://heatwarehouse.pythonanywhere.com/",
 ]

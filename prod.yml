@@ -20,18 +20,17 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    command: gunicorn core.wsgi:application --bind 0.0.0.0:${WEB_PORT} --workers=4
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers=4
     security_opt:
       - seccomp:unconfined
     volumes:
-#      - ./:/home/app/web/
       - ./static:/home/app/web/static
       - ./media:/home/app/web/media
       - ./locale:/home/app/web/locale
     env_file:
       - .env
     ports:
-      - ${WEB_PORT}:${WEB_PORT}
+      - ${WEB_PORT}:8000
     depends_on:
       - db
 
@@ -48,10 +47,10 @@ services:
 #      - db
 #      - redis
 
-  redis:
-    container_name: heat_warehouse_redis
-    image: redis:5.0
-    restart: always
+#  redis:
+#    container_name: heat_warehouse_redis
+#    image: redis:5.0
+#    restart: always
 
 volumes:
   postgres_data:
