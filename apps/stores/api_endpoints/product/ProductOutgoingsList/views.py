@@ -32,7 +32,11 @@ class ProductOutgoingsListAPIView(ListAPIView):
         queryset = Product.objects.filter(is_active=True, id__in=product_ids)
         queryset = queryset.select_related("unit")
         queryset = queryset.order_by("name")
-        queryset = queryset.annotate(total_outgoings=models.Sum(order_items.values("total_amount")))
+        queryset = queryset.annotate(
+            total_outgoings=models.Sum(
+                models.Subquery(order_items.filter(product_id=models.OuterRef("id")).values("total_amount"))
+            )
+        )
 
         return queryset
 
