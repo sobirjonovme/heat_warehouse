@@ -8,6 +8,7 @@ urlpatterns = [
     # warehouse
     path("list/", warehouse.WarehouseListAPIView.as_view(), name="warehouses-list"),
     # product
+    path("product-units/", product.ProductUnitListAPIView.as_view(), name="product-units-list"),
     path("products/list/", product.ProductListAPIView.as_view(), name="products-list"),
     path("products/create/", product.ProductCreateAPIView.as_view(), name="product-create"),
     path("products/outgoings/", product.ProductOutgoingsListAPIView.as_view(), name="product-outgoings"),
