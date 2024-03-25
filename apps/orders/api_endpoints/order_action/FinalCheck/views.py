@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.orders.choices import OrderStatus
-from apps.orders.models import Order
+from apps.orders.models import Order, OrderItem
 from apps.orders.permissions import CanOrderBeFinalChecked
 
 from .serializers import FinalCheckOrderSerializer
@@ -26,14 +26,20 @@ class FinalCheckOrderAPIView(APIView):
         serializer = self.serializer_class(instance=order, data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
 
+        items = []
         for item in serializer.validated_data.get("items"):
             order_item = item.get("order_item")
+            order_item.delivered_amount = item.get("delivered_amount")
             order_item.cash_amount = item.get("cash_amount", 0)
             order_item.card_amount = item.get("card_amount", 0)
             order_item.debt_amount = item.get("debt_amount", 0)
             order_item.remain_debt = order_item.debt_amount
             order_item.payment_comment = item.get("payment_comment", None)
-            order_item.save()
+            items.append(order_item)
+            # order_item.save()
+        OrderItem.objects.bulk_update(
+            items, ["delivered_amount", "cash_amount", "card_amount", "debt_amount", "remain_debt", "payment_comment"]
+        )
 
         order.status = OrderStatus.FINAL_CHECKED
         order.main_stockman = request.user

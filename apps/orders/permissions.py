@@ -38,5 +38,5 @@ class CanOrderBeFinalChecked(BasePermission):
         return bool(
             user.is_authenticated
             and user.role in [UserRoles.MAIN_STOCKMAN, UserRoles.ADMIN]
-            and obj.status == OrderStatus.DELIVERED
+            and obj.status == OrderStatus.CONFIRMED
         )
