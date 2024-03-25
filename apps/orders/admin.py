@@ -68,7 +68,7 @@ class OrderAdmin(unfold_admin.ModelAdmin):
         ordering="status",
         label={
             OrderStatus.CREATED: "info",  # blue
-            OrderStatus.CONFIRMED: "info",  # blue
+            OrderStatus.CONFIRMED: "warning",  # blue
             OrderStatus.DELIVERED: "warning",  # orange
             OrderStatus.FINAL_CHECKED: "success",  # green
             OrderStatus.CANCELED: "danger",  # red
