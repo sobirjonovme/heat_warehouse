@@ -27,14 +27,17 @@ class ProductOutgoingsListAPIView(ListAPIView):
         order_items = order_items.annotate(
             total_amount=models.F("cash_amount") + models.F("card_amount") + models.F("debt_amount")
         )
-        product_ids = order_items.values_list("product_id", flat=True)
+        product_ids = set(order_items.values_list("product_id", flat=True))
 
         queryset = Product.objects.filter(is_active=True, id__in=product_ids)
         queryset = queryset.select_related("unit")
         queryset = queryset.order_by("name")
         queryset = queryset.annotate(
-            total_outgoings=models.Sum(
-                models.Subquery(order_items.filter(product_id=models.OuterRef("id")).values("total_amount"))
+            total_outgoings=models.Subquery(
+                order_items.filter(product_id=models.OuterRef("id"))
+                .values("product_id")
+                .annotate(total_money=models.Sum("total_amount"))
+                .values("total_money")
             )
         )
 
