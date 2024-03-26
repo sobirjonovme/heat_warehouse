@@ -91,11 +91,17 @@ class OrderAdmin(unfold_admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(unfold_admin.ModelAdmin):
-    list_display = ("id", "order", "product", "needed_amount", "delivered_amount")
-    list_display_links = ("id",)
+    list_display = ("id", "order", "product", "needed_amount", "delivered_amount", "total_money")
+    list_display_links = ("id", "product")
     search_fields = ("id", "order__id", "product__name")
     autocomplete_fields = ("product", "order")
     readonly_fields = ("created_at", "updated_at")
+
+    @display(description=_("Total money"))
+    def total_money(self, obj):
+        total_money = obj.cash_amount + obj.card_amount + obj.debt_amount
+        # format total_money like 1,000.00
+        return "{:,.2f}".format(total_money)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
