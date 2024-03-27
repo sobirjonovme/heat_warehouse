@@ -4,7 +4,7 @@ from apps.orders.choices import OrderStatus
 from apps.users.models import UserRoles
 
 
-class IsStockman(BasePermission):
+class IsStockmanOrAdmin(BasePermission):
     def has_permission(self, request, view):
         user = request.user
         return bool(

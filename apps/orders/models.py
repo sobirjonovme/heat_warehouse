@@ -104,8 +104,8 @@ class DebtPayback(BaseModel):
     order_item = models.ForeignKey(
         to=OrderItem, verbose_name=_("Order Item"), related_name="debt_paybacks", on_delete=models.CASCADE
     )
-    cash_amount = models.DecimalField(verbose_name=_("Amount"), max_digits=13, decimal_places=2, default=0)
-    card_amount = models.DecimalField(verbose_name=_("Amount"), max_digits=13, decimal_places=2, default=0)
+    cash_amount = models.DecimalField(verbose_name=_("Cash amount"), max_digits=13, decimal_places=2, default=0)
+    card_amount = models.DecimalField(verbose_name=_("Card amount"), max_digits=13, decimal_places=2, default=0)
     date = models.DateField(verbose_name=_("Date"))
     user = models.ForeignKey(
         to="users.User", verbose_name=_("User"), related_name="debt_paybacks", on_delete=models.SET_NULL, null=True

@@ -1,17 +1,18 @@
 # from django.db.models import Case, DecimalField, F, Sum, Value, When
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
 
-# from apps.orders.choices import OrderStatus
 from apps.orders.models import Order
+from apps.orders.permissions import IsStockmanOrAdmin
+# from apps.orders.choices import OrderStatus
+from apps.users.models import UserRoles
 
 from .serializers import OrderListSerializer
 
 
 class OrderListAPIView(ListAPIView):
     serializer_class = OrderListSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsStockmanOrAdmin,)
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = {
         "created_at": ["gte", "lte"],
@@ -23,7 +24,11 @@ class OrderListAPIView(ListAPIView):
     }
 
     def get_queryset(self):
-        queryset = Order.objects.order_by("-created_at")
+        user = self.request.user
+
+        qs = Order.objects.order_by("-created_at")
+        if user.role == UserRoles.STOCKMAN:
+            qs = qs.filter(warehouse__stockman=self.request.user)
 
         # if object status CHECKED, then annotate total_money
         # in other cases, annotate total_money = 0
@@ -38,7 +43,9 @@ class OrderListAPIView(ListAPIView):
         #         )
         #     )
         # )
-        return queryset
+
+        qs = qs.select_related("warehouse", "ordered_by", "main_stockman", "supplier", "watchman")
+        return qs
 
 
 __all__ = ["OrderListAPIView"]

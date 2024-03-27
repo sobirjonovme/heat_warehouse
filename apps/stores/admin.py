@@ -33,7 +33,7 @@ class ProductUnitAdmin(unfold_admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(unfold_admin.ModelAdmin):
-    list_display = ("id", "name", "unit_short_name", "custom_type", "is_active")
+    list_display = ("id", "name", "unit_short_name", "custom_type", "is_active", "created_by")
     list_display_links = ("id", "name")
     search_fields = ("id", "name")
     list_filter = ("is_active", "type")
@@ -79,7 +79,7 @@ class ProductAdmin(unfold_admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        qs = qs.select_related("unit")
+        qs = qs.select_related("unit", "created_by")
         qs = qs.order_by("-id")
         return qs
 
