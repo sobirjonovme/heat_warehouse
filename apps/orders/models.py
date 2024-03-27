@@ -52,6 +52,26 @@ class Order(BaseModel):
     def __str__(self):
         return f"Order #{self.id} - {self.status}"
 
+    def store_items_to_warehouse(self):
+        from apps.stores.models import WarehouseProduct
+
+        created_products = []
+        updated_products = []
+        for item in self.items.all():
+            warehouse_product = WarehouseProduct.objects.filter(warehouse=self.warehouse, product=item.product).first()
+            if warehouse_product:
+                warehouse_product.quantity += item.delivered_amount
+                updated_products.append(warehouse_product)
+                continue
+
+            warehouse_product = WarehouseProduct(
+                warehouse=self.warehouse, product=item.product, quantity=item.delivered_amount
+            )
+            created_products.append(warehouse_product)
+
+        WarehouseProduct.objects.bulk_create(created_products)
+        WarehouseProduct.objects.bulk_update(updated_products, ["quantity"])
+
 
 class OrderItem(BaseModel):
     order = models.ForeignKey(to=Order, verbose_name=_("Order"), related_name="items", on_delete=models.CASCADE)
