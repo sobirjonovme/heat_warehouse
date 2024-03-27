@@ -103,7 +103,34 @@ class WarehouseAdmin(unfold_admin.ModelAdmin):
         "name",
     )
     readonly_fields = ("created_at", "updated_at")
-    inlines = (WarehouseProductInline,)
+    # inlines = (WarehouseProductInline,)
+
+
+@admin.register(WarehouseProduct)
+class WarehouseProductAdmin(unfold_admin.ModelAdmin):
+    list_display = ("id", "warehouse", "product", "quantity_")
+    list_display_links = (
+        "id",
+        "warehouse",
+        "product",
+    )
+    search_fields = (
+        "id",
+        "warehouse__name",
+        "product__name",
+    )
+    list_filter = ("warehouse",)
+    readonly_fields = ("created_at", "updated_at")
+
+    @display(description=_("Quantity"))
+    def quantity_(self, obj):
+        return f"{obj.quantity} {obj.product.unit.short_name}"
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        qs = qs.select_related("warehouse", "product", "product__unit")
+        qs = qs.order_by("-id")
+        return qs
 
 
 @admin.register(WarehouseProductUsage)

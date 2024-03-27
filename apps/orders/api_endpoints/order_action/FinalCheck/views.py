@@ -45,6 +45,8 @@ class FinalCheckOrderAPIView(APIView):
         order.main_stockman = request.user
         order.save()
 
+        order.store_items_to_warehouse()
+
         return Response(status=status.HTTP_200_OK)
 
 
