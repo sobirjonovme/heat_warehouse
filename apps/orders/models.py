@@ -58,22 +58,18 @@ class Order(BaseModel):
     def store_items_to_warehouse(self):
         from apps.stores.models import WarehouseProduct
 
-        created_products = []
-        updated_products = []
         for item in self.items.all():
             warehouse_product = WarehouseProduct.objects.filter(warehouse=self.warehouse, product=item.product).first()
+
             if warehouse_product:
                 warehouse_product.quantity += item.delivered_amount
-                updated_products.append(warehouse_product)
+                warehouse_product.save()
                 continue
 
             warehouse_product = WarehouseProduct(
                 warehouse=self.warehouse, product=item.product, quantity=item.delivered_amount
             )
-            created_products.append(warehouse_product)
-
-        WarehouseProduct.objects.bulk_create(created_products)
-        WarehouseProduct.objects.bulk_update(updated_products, ["quantity"])
+            warehouse_product.save()
 
 
 class OrderItem(BaseModel):
