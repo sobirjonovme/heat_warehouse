@@ -52,7 +52,7 @@ class ProductOutgoingsListAPIView(ListAPIView):
 
         # calculate the total amount of product outgoings and save it class attribute
         total_outgoings = queryset.aggregate(total=models.Sum("total_outgoings"))["total"]
-        self.total_outgoings = total_outgoings
+        self.total_outgoings = str(total_outgoings) if total_outgoings else "0"
 
         return queryset
 
