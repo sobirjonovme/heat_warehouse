@@ -3,14 +3,15 @@ from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import ListAPIView
+from rest_framework.response import Response
 
 from apps.orders.choices import OrderStatus
 from apps.orders.models import OrderItem
 from apps.orders.permissions import IsStockmanOrAdmin
+from apps.stores.filters import DATE_FILTER_PARAMETERS, OrderItemFilter
 from apps.stores.models import Product
 from apps.users.models import UserRoles
 
-from .filters import DATE_FILTER_PARAMETERS, OrderItemFilter
 from .serializers import ProductOutgoingsListSerializer
 
 
@@ -21,6 +22,8 @@ class ProductOutgoingsListAPIView(ListAPIView):
     filter_backends = (DjangoFilterBackend, SearchFilter)
     filterset_fields = ("type",)
     search_fields = ("name",)
+
+    total_outgoings = 0
 
     def get_queryset(self):
         user = self.request.user
@@ -47,7 +50,27 @@ class ProductOutgoingsListAPIView(ListAPIView):
             )
         )
 
+        # calculate the total amount of product outgoings and save it class attribute
+        total_outgoings = queryset.aggregate(total=models.Sum("total_outgoings"))["total"]
+        self.total_outgoings = total_outgoings
+
         return queryset
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            res = self.get_paginated_response(serializer.data)
+            # add total outgoings to the response
+            res.data["total_outgoings"] = self.total_outgoings
+            # move total outgoings to the first position in the response
+            res.data.move_to_end("total_outgoings", last=False)
+            return res
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     @swagger_auto_schema(manual_parameters=DATE_FILTER_PARAMETERS)
     def get(self, request, *args, **kwargs):
