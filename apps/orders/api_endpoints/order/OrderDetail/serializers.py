@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from apps.common.services.common import remove_exponent_from_decimal
 from apps.orders.models import Order, OrderItem
 from apps.orders.serializers import UserShortSerializer
 from apps.stores.models import Product
@@ -17,6 +18,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
 class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
+    needed_amount = serializers.SerializerMethodField()
+    delivered_amount = serializers.SerializerMethodField()
 
     class Meta:
         model = OrderItem
@@ -34,6 +37,20 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "payment_comment",
         )
         ref_name = "OrderDetailOrderItemSerializer"
+
+    def get_needed_amount(self, obj):
+        if obj.needed_amount is None:
+            return None
+
+        needed_amount = remove_exponent_from_decimal(obj.needed_amount)
+        return str(needed_amount)
+
+    def get_delivered_amount(self, obj):
+        if obj.delivered_amount is None:
+            return None
+
+        delivered_amount = remove_exponent_from_decimal(obj.delivered_amount)
+        return str(delivered_amount)
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
