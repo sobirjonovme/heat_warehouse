@@ -29,6 +29,7 @@ class Order(BaseModel):
         related_name="main_stockman_orders",
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
     supplier = models.ForeignKey(
         to="users.User",
@@ -36,6 +37,7 @@ class Order(BaseModel):
         related_name="delivered_orders",
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
     watchman = models.ForeignKey(
         to="users.User",
@@ -43,6 +45,7 @@ class Order(BaseModel):
         related_name="watchman_orders",
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
 
     class Meta:
