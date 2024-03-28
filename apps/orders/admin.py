@@ -34,6 +34,7 @@ class OrderAdmin(unfold_admin.ModelAdmin):
         "main_stockman",
         "supplier",
         "watchman",
+        "warehouse",
     ]
 
     list_display_links = ("id", "show_status_customized_color")
@@ -54,6 +55,7 @@ class OrderAdmin(unfold_admin.ModelAdmin):
         "watchman__last_name",
     )
     list_filter = (
+        "warehouse",
         "status",
         # ("created_at", RangeDateFilter),  # Date range search, __gte and __lte lookup
     )
@@ -91,9 +93,10 @@ class OrderAdmin(unfold_admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(unfold_admin.ModelAdmin):
-    list_display = ("id", "order", "product", "needed_amount", "delivered_amount", "total_money")
-    list_display_links = ("id", "product")
+    list_display = ("id", "order", "product", "needed_amount", "delivered_amount", "total_money", "warehouse_")
+    list_display_links = ("id", "order", "product")
     search_fields = ("id", "order__id", "product__name")
+    list_filter = ("order__warehouse",)
     autocomplete_fields = ("product", "order")
     readonly_fields = ("created_at", "updated_at")
 
@@ -103,9 +106,13 @@ class OrderItemAdmin(unfold_admin.ModelAdmin):
         # format total_money like 1,000.00
         return "{:,.2f}".format(total_money)
 
+    @display(description=_("Warehouse"))
+    def warehouse_(self, obj):
+        return obj.order.warehouse
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        qs = qs.select_related("product", "order")
+        qs = qs.select_related("product", "order", "order__warehouse")
         return qs
 
 
