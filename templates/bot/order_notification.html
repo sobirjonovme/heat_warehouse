@@ -11,5 +11,5 @@
 
 <b>📜 Mahsulotlar:</b>
 {% for item in order_items %}
-    🏷 {{ item.product.name }} — {{ item.needed_amount }} {{ item.product.unit.short_name }}
+    🏷 {{ item.product }} — {{ item.needed_amount }} {{ item.unit }}{{item.comment}}
 {% endfor %}
