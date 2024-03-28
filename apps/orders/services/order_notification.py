@@ -32,7 +32,7 @@ def send_order_notification(order):
             "order": order,
             "supplier": order.supplier.get_full_name(),
             "supplier_tg_id": supplier_tg_id,
-            "time": dateformat.format(timezone.localtime(), "j-F H:i"),
+            "time": dateformat.format(order.created_at.astimezone(timezone.get_current_timezone()), "j-F H:i"),
             "stockman": order.ordered_by.get_full_name(),
             "warehouse": order.warehouse.name,
             "order_items": order_items,
