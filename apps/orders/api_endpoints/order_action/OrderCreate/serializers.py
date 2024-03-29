@@ -29,6 +29,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         )
         extra_kwargs = {
             "status": {"read_only": True},
+            "warehouse": {"required": True, "allow_null": False},
         }
 
     def create(self, validated_data):
