@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from apps.orders.choices import OrderStatus
 from apps.orders.models import OrderItem
 from apps.orders.permissions import IsStockmanOrAdmin
-from apps.stores.filters import DATE_FILTER_PARAMETERS, OrderItemFilter
+from apps.stores.filters import ORDER_ITEM_FILTER_PARAMETERS, OrderItemFilter
 from apps.stores.models import Product
 from apps.users.models import UserRoles
 
@@ -72,7 +72,7 @@ class ProductOutgoingsListAPIView(ListAPIView):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    @swagger_auto_schema(manual_parameters=DATE_FILTER_PARAMETERS)
+    @swagger_auto_schema(manual_parameters=ORDER_ITEM_FILTER_PARAMETERS)
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 

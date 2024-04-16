@@ -7,12 +7,13 @@ from apps.orders.models import OrderItem
 
 
 class OrderItemFilter(filters.FilterSet):
+    warehouse = filters.NumberFilter(field_name="order__warehouse")
     from_date = filters.DateFilter(method="filter_from_date", field_name="order__created_at")
     to_date = filters.DateFilter(method="filter_to_date", field_name="order__created_at")
 
     class Meta:
         model = OrderItem
-        fields = ("from_date", "to_date")
+        fields = ("warehouse", "from_date", "to_date")
 
     def filter_from_date(self, queryset, name, value):
         from_time = datetime.strptime(f"{value} 00:00:00 +0000", "%Y-%m-%d %H:%M:%S %z")
@@ -26,4 +27,9 @@ class OrderItemFilter(filters.FilterSet):
 DATE_FILTER_PARAMETERS = [
     openapi.Parameter("from_date", openapi.IN_QUERY, type=openapi.FORMAT_DATE),
     openapi.Parameter("to_date", openapi.IN_QUERY, type=openapi.FORMAT_DATE),
+]
+
+ORDER_ITEM_FILTER_PARAMETERS = [
+    openapi.Parameter("warehouse", openapi.IN_QUERY, type=openapi.TYPE_INTEGER),
+    *DATE_FILTER_PARAMETERS,
 ]
